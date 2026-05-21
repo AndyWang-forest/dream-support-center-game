@@ -1,0 +1,10 @@
+# Copy these values into a local, untracked signing properties file.
+# Recommended path:
+# ~/.codex/android-signing/dream-support-signing.properties
+#
+# Do not commit a real keystore or real passwords.
+
+storeFile=/absolute/path/to/dream-support-upload.keystore
+storePassword=replace-with-keystore-password
+keyAlias=dream-support-upload
+keyPassword=replace-with-key-password

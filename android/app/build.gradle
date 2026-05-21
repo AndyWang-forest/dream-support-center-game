@@ -1,0 +1,88 @@
+apply plugin: 'com.android.application'
+
+def signingProperties = new Properties()
+def signingPropertiesPath = System.getenv("DREAM_SUPPORT_SIGNING_PROPERTIES")
+if (!signingPropertiesPath) {
+    signingPropertiesPath = "${System.properties['user.home']}/.codex/android-signing/dream-support-signing.properties"
+}
+def signingPropertiesFile = file(signingPropertiesPath)
+if (signingPropertiesFile.exists()) {
+    signingPropertiesFile.withInputStream { signingProperties.load(it) }
+}
+
+def signingValue = { propertyName, envName ->
+    def envValue = System.getenv(envName)
+    return envValue ?: signingProperties.getProperty(propertyName)
+}
+
+def releaseStoreFile = signingValue("storeFile", "DREAM_SUPPORT_KEYSTORE_PATH")
+def releaseStorePassword = signingValue("storePassword", "DREAM_SUPPORT_KEYSTORE_PASSWORD")
+def releaseKeyAlias = signingValue("keyAlias", "DREAM_SUPPORT_KEY_ALIAS")
+def releaseKeyPassword = signingValue("keyPassword", "DREAM_SUPPORT_KEY_PASSWORD")
+def releaseSigningReady = releaseStoreFile && releaseStorePassword && releaseKeyAlias && releaseKeyPassword
+
+android {
+    namespace = "com.nightdesk.dreamsupport"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "com.nightdesk.dreamsupport"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    signingConfigs {
+        release {
+            if (releaseSigningReady) {
+                storeFile file(releaseStoreFile)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            if (releaseSigningReady) {
+                signingConfig signingConfigs.release
+            }
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

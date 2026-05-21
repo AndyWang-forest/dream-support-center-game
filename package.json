@@ -1,0 +1,27 @@
+{
+  "name": "dream-support-center-game",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-web.mjs",
+    "generate:icons": "node scripts/generate-icons.mjs",
+    "store:assets": "node scripts/generate-store-assets.mjs",
+    "cap:sync": "npm run build && npx cap sync",
+    "android:debug": "npm run cap:sync && bash -lc 'source scripts/android-build-env.sh && cd android && ./gradlew assembleDebug'",
+    "android:release": "npm run android:apk:release",
+    "android:signing:init": "bash -lc 'source scripts/android-build-env.sh && node scripts/ensure-android-release-signing.mjs'",
+    "android:bundle:release": "npm run cap:sync && npm run android:signing:init && bash -lc 'source scripts/android-build-env.sh && cd android && ./gradlew bundleRelease' && node scripts/copy-android-release-artifacts.mjs",
+    "android:apk:release": "npm run cap:sync && npm run android:signing:init && bash -lc 'source scripts/android-build-env.sh && cd android && ./gradlew assembleRelease' && node scripts/copy-android-release-artifacts.mjs",
+    "android:release:all": "npm run cap:sync && npm run android:signing:init && bash -lc 'source scripts/android-build-env.sh && cd android && ./gradlew bundleRelease assembleRelease' && node scripts/copy-android-release-artifacts.mjs",
+    "taptap:check": "node scripts/taptap-check.mjs",
+    "taptap:check:privacy": "node scripts/taptap-check.mjs --privacy-url"
+  },
+  "dependencies": {
+    "@capacitor/core": "8.3.4"
+  },
+  "devDependencies": {
+    "@capacitor/android": "8.3.4",
+    "@capacitor/cli": "8.3.4"
+  }
+}

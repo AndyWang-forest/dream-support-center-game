@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">梦境客服中心</string>
+    <string name="title_activity_main">梦境客服中心</string>
+    <string name="package_name">com.nightdesk.dreamsupport</string>
+    <string name="custom_url_scheme">com.nightdesk.dreamsupport</string>
+</resources>

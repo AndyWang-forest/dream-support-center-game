@@ -1,0 +1,13 @@
+{
+  "gameName": "梦境客服中心",
+  "packageName": "com.nightdesk.dreamsupport",
+  "versionName": "1.0",
+  "versionCode": 1,
+  "operatorName": "锅崽科技",
+  "privacyUrl": "",
+  "hasOnlineAiSynthesis": false,
+  "hasAccountSystem": false,
+  "hasPayments": false,
+  "hasAds": false,
+  "distributionMode": "TapPlay"
+}

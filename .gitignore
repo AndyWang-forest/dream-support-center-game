@@ -1,0 +1,32 @@
+.DS_Store
+node_modules/
+dist/
+tmp/
+.env
+.env.*
+*.log
+
+# Signing secrets
+*.jks
+*.keystore
+*.p12
+android/local.properties
+android/signing.properties
+
+# Generated native build output
+android/.gradle/
+android/**/build/
+ios/DerivedData/
+ios/**/build/
+
+# Store binaries are outputs. Keep final assets separately.
+artifacts/android/release/*.apk
+artifacts/android/release/*.aab
+artifacts/android/release/*.pem
+
+# Local recording/debug captures
+artifacts/store-assets/video/*.mov
+artifacts/store-assets/video/*.mov.png
+artifacts/store-assets/video/concat.txt
+artifacts/store-assets/video/display-*.png
+artifacts/store-assets/video/region-test*.png

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>梦境客服中心</title>
+    <link rel="stylesheet" href="../../dist/styles.css" />
+  <style>
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        min-height: 1920px;
+        overflow: hidden;
+      }
+
+      .app {
+        width: 1080px !important;
+        max-width: 1080px !important;
+        margin: 0 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app" aria-live="polite">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">DREAM SUPPORT</p>
+          <h1>梦境客服中心</h1>
+        </div>
+        <div class="day-card">
+          <span>工单</span>
+          <strong id="caseIndex">1/6</strong>
+        </div>
+      </section>
+
+      <section class="case-panel">
+        <div class="case-head">
+          <div>
+            <p id="caseTag" class="tag">夜班队列</p>
+            <h2 id="caseTitle">正在接入梦境投诉</h2>
+          </div>
+          <button id="resetBtn" class="icon-btn" type="button" aria-label="重新开始">↺</button>
+        </div>
+        <p id="caseIntro" class="intro"></p>
+        <div class="meter" aria-label="整理进度">
+          <span id="meterFill"></span>
+        </div>
+        <p id="meterText" class="meter-text">归类 0/0 个梦境碎片</p>
+      </section>
+
+      <section class="items-panel">
+        <div class="section-title">
+          <span>梦境碎片</span>
+          <small>点选一个碎片，再放入下方分类</small>
+        </div>
+        <div id="itemsGrid" class="items-grid"></div>
+      </section>
+
+      <section class="sort-panel">
+        <button class="drop-zone" type="button" data-zone="memory">
+          <span>记忆</span>
+          <strong id="memoryCount">0</strong>
+        </button>
+        <button class="drop-zone" type="button" data-zone="feeling">
+          <span>情绪</span>
+          <strong id="feelingCount">0</strong>
+        </button>
+        <button class="drop-zone" type="button" data-zone="anomaly">
+          <span>异常</span>
+          <strong id="anomalyCount">0</strong>
+        </button>
+        <button class="drop-zone" type="button" data-zone="anchor">
+          <span>锚点</span>
+          <strong id="anchorCount">0</strong>
+        </button>
+      </section>
+
+      <section class="desk-panel">
+        <div class="section-title">
+          <span>客服记录</span>
+          <small id="selectedHint">尚未选择碎片</small>
+        </div>
+        <div id="clueLog" class="clue-log"></div>
+      </section>
+
+      <section class="decision-panel">
+        <div class="section-title">
+          <span>处理方案</span>
+          <small>归类后选择梦境售后动作</small>
+        </div>
+        <div id="treatments" class="choices"></div>
+        <div class="section-title response-title">
+          <span>回复客户</span>
+          <small>选择一条结案话术</small>
+        </div>
+        <div id="replies" class="choices"></div>
+        <button id="submitBtn" class="primary-btn" type="button" disabled>提交工单</button>
+      </section>
+
+      <section class="result-panel">
+        <p class="tag">NIGHT SHIFT CONSOLE</p>
+        <h2 id="resultTitle">等待接线</h2>
+        <p id="resultText">请先整理梦境碎片。不是每个梦都需要被修好，有些只是需要被温柔地放回原处。</p>
+      </section>
+    </main>
+    <script src="../../dist/game.js"></script>
+  </body>
+</html>
